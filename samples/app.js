@@ -31,6 +31,7 @@ App = (function()
 
 		// Set up EntitySystems. 
 		// They will be process in the order that they are added to the array
+		
 		this.systems.push.apply(
 			this.systems, systemGroup
 		);
@@ -63,6 +64,8 @@ App = (function()
 					self.componentGroups
 				);
 			});
+
+			console.log(this.componentGroups);
 
 			// Debug output of Systems
 			console.log('Systems', this.systems);

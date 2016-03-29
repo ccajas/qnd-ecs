@@ -8,7 +8,9 @@
 	<script src="../../src/ecs.js"></script>
 	<script src="../app.js"></script>
 	<script src="components.js"></script>
-	<script src="testSystem.js"></script>
+
+	<script src="physicsSystem.js"></script>
+	<script src="movementSystem.js"></script>
 	<script src="renderSystem.js"></script>
 
 	<canvas id="draw" width="500" height="500"></canvas>
@@ -21,22 +23,26 @@
 		ctx.canvas.height = 500;
 
 		// Max default entities (this can be increased)
-		var len = 100;
+		var len = 1500;
 
 		// Set up Components
 		var componentGroups = {
-			position: new Array(len).fill(new Position(0))
+			position: new Array(len).fill(new Position(0)),
+			velocity: new Array(len).fill(new Velocity(1)),
 		}
 
 		// Set up EntitySystems
 		var systems = 
 		[
-			new TestSystem('Test'),
-			new RenderSystem('Render', ctx)
+			new PhysicsSystem  ('Physics', ctx),
+			new MovementSystem ('Movement'),
+			new RenderSystem   ('Render', ctx)
 		];
 
+		// Initialize the app with ECS
 		var testApp = new App(systems, componentGroups, ctx);
 		testApp.init();
+
 	</script>
 </body>
 </html>

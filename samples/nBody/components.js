@@ -1,3 +1,8 @@
+
+'use strict'
+
+//// Position ////
+
 /**
  * A Position component
  * @class
@@ -24,13 +29,13 @@ function Position(type, id)
  * Position constructor with defined values
  *
  * @memberOf Position
- * @param {number} x x coordinate
- * @param {number} y y coordinate
  * @param {number} type Component type ID
  * @param {number} [id] ID of the entity this belongs to
+ * @param {number} x x coordinate
+ * @param {number} y y coordinate
  */
 
-function Position(x, y, type, id)
+function Position(type, id, x, y)
 {
 	Component.call(this, type, id);
 
@@ -45,3 +50,39 @@ function Position(x, y, type, id)
  */
 
 Position.prototype = new Component();
+
+//// Velocity ////
+
+/**
+ * A Velocity component
+ * @class
+ * @name Velocity
+ */
+
+/**
+ * Velocity constructor with defined values
+ *
+ * @memberOf Velocity
+ * @param {number} type Component type ID
+ * @param {number} [id] ID of the entity this belongs to
+ * @param {number} x horizontal velocity
+ * @param {number} y vertical velocity
+ * @param {number} m mass or momentum
+ */
+
+function Velocity(type, id, x, y, m)
+{
+	Component.call(this, type, id);
+
+	this.x = x || 0;
+	this.y = y || 0;
+	this.m = m || 1;
+}
+
+/**
+ * Inherit from Component
+ *
+ * @memberOf Velocity
+ */
+
+Velocity.prototype = new Component();
