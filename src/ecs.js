@@ -1,4 +1,6 @@
 
+'use strict';
+
 //// Component ////
 
 /**
@@ -6,8 +8,6 @@
  * @class
  * @name Component
  */
-
-'use strict';
 
 /**
  * Component constructor
@@ -18,7 +18,7 @@
 
 function Component(type, id)
 {
-	this.entityID = id || 0;
+	this.entityID = id || -1;
 	this.live = true;
 }
 
@@ -38,9 +38,9 @@ Component.prototype.clone = function()
 //// EntitySystem ////
 
 /**
-* @class base System object
-* @name EntitySystem
-*/
+ * @class base System object
+ * @name EntitySystem
+ */
 
 /**
  * System construtor
@@ -69,6 +69,18 @@ EntitySystem.prototype.init = function(total, components)
 }
 
 /**
+ * Helper function to iterate though live entities
+ *
+ * @memberOf EntitySystem
+ * @param {Function} func callback function for processing entities
+ */
+
+EntitySystem.prototype.forEachEntity = function(func)
+{
+	for (var i = 0; i < this.totalEntities; i++) func(i, this);
+}
+
+/**
  * Process Components and update entity count. 
  * Must be called after child EntitySystem process method
  *
@@ -76,8 +88,4 @@ EntitySystem.prototype.init = function(total, components)
  * @param {Number} dt elapsed time, in seconds
  */
 
-EntitySystem.prototype.process = function(dt)
-{
-
-}
-
+EntitySystem.prototype.process = function(dt) { }
