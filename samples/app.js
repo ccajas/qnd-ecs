@@ -65,8 +65,6 @@ App = (function()
 				);
 			});
 
-			console.log(this.componentGroups);
-
 			// Debug output of Systems
 			console.log('Systems', this.systems);
 
@@ -89,10 +87,10 @@ App = (function()
 			dt = (Date.now() - lastFrame) / 1000;
 			lastFrame = Date.now();
 
-			// Process systems
+			// Process systems and return updated entity count
 			this.systems.forEach(function(system)
 			{
-				system.process(dt);
+				self.totalEntities = system.process(dt, self.totalEntities);
 			});
 
 			// Call update on next frame

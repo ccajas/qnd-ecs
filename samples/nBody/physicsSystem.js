@@ -84,10 +84,8 @@ PhysicsSystem.prototype.init = function(total, components)
 PhysicsSystem.prototype.process = function(dt)
 {
 	// Apply movement relations
-	this.forEachEntity(function(i, self) 
+	this.forEachEntity(function(i, self)
 	{
-		var mag = 0; // magnitude
-
 		// Loop through other entities that haven't been calculated
 		// Start from this entity length
 		for (var j = self.totalEntities - 1; j >= i; j--) 
@@ -97,13 +95,14 @@ PhysicsSystem.prototype.process = function(dt)
 			var dist2 = (dx * dx) + (dy * dy);
 
 			// Attract other entities
-			if (!(dist2 <= 1 || dist2 > 100000)) 
+			if (!(dist2 <= 100 || dist2 > 100000)) 
 			{
 				var v1 = self.velocities[i];
 				var v2 = self.velocities[j];
 				var dist = Math.sqrt(dist2);
 
-				mag = (self.gravity * v1.m * v1.m) / (dist * dist * dist);
+				// magnitude
+				var mag = (self.gravity * v1.m * v1.m) / (dist * dist * dist);
 
 				v1.x += dx * mag * v1.m;
 				v1.y += dy * mag * v1.m;

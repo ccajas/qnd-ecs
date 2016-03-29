@@ -22,9 +22,17 @@ function RenderSystem(handle, ctx)
 	this.ctx = ctx;
 	this.w = ctx.canvas.width;
 	this.h = ctx.canvas.height;
+	this.imgData = ctx.getImageData(0, 0, this.w, this.h);
 
-	// Default color
-	this.pixelFill = "#fff";
+	// Buffer data for image processing
+	this.buf  = new ArrayBuffer(this.imgData.data.length);
+	this.buf8 = new Uint8ClampedArray(this.buf);
+	this.data = new Uint32Array(this.buf);
+
+	console.log(this.imgData);
+
+	// Default background color
+	this.bg = 0xff000000;
 }
 
 /**
@@ -50,6 +58,7 @@ RenderSystem.prototype.init = function(total, components)
 
 	// Get positions
 	this.positions = components.position;
+	this.velocities = components.velocity;
 }
 
 
@@ -63,15 +72,32 @@ RenderSystem.prototype.init = function(total, components)
 RenderSystem.prototype.process = function(dt)
 {
 	// Clear the canvas
-	this.ctx.fillStyle = '#333';
-	this.ctx.fillRect(0, 0, this.w, this.h);
+	for (var d = 0; d < this.data.length; )
+	    this.data[d++] = this.bg;
 
 	// Draw the dots
-	this.ctx.fillStyle = this.pixelFill;
+	this.forEachEntity(function(i, self) 
+	{
+		var x = self.positions[i].x|0;
+		var y = self.positions[i].y|0;
 
-	this.forEachEntity(function(i, self) {
-		ctx.fillRect(self.positions[i].x|0, self.positions[i].y|0, 1, 1)
+		// Add color based on velocity
+		var vx = self.velocities[i].x * 5;
+		var vy = self.velocities[i].y * 5;
+
+		var value = ((vx * vx + vy * vy)|0) & 0xff;
+
+		self.data[y * self.w + x] |= 
+            (value << 16) | (value <<  8) | value;
 	});
+
+	this.imgData.data.set(this.buf8);
+	this.ctx.putImageData(this.imgData, 0, 0);
+
+	// Display no. of live entities
+	this.ctx.fillStyle = '#ccc';
+	this.ctx.font = "12px Helvetica, Arial";
+	this.ctx.fillText('Live entities: '+ this.totalEntities, 5, this.h - 5)
 
 	// Call base method to track entity amount
 	return EntitySystem.prototype.process.call(this, dt);
