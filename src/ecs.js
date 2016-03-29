@@ -58,10 +58,11 @@ function EntitySystem(handle)
  * Base System initialization
  *
  * @memberOf EntitySystem
- * @param {Number} total number of starting live entities
+ * @param {Number} total the starting number of live entities
+ * @param {Object} components object containing arrays of Components
  */
 
-EntitySystem.prototype.init = function(total)
+EntitySystem.prototype.init = function(total, components)
 {
 	// init stuff
 	this.totalEntities = total;

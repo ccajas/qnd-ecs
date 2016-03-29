@@ -58,11 +58,14 @@ App = (function()
 
 			this.systems.forEach(function(system)
 			{
-				system.init(self.totalEntities);
+				system.init(
+					self.totalEntities, 
+					self.componentGroups
+				);
 			});
 
-			// Debug System output
-			console.log(this.systems);
+			// Debug output of Systems
+			console.log('Systems', this.systems);
 
 			// Begin update loop
 			this.update(dt);
