@@ -13,12 +13,14 @@
  * Component constructor
  *
  * @memberOf Component
+ * @param {number} type Component type ID
  * @param {number} [id] ID of the entity this belongs to
  */
 
 function Component(type, id)
 {
-	this.entityID = id || -1;
+	this._typeID   = type;
+	this._entityID = id || -1;
 	this.live = true;
 }
 
