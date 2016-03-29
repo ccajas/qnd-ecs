@@ -97,7 +97,7 @@ RenderSystem.prototype.process = function(dt)
 	// Display no. of live entities
 	this.ctx.fillStyle = '#ccc';
 	this.ctx.font = "12px Helvetica, Arial";
-	this.ctx.fillText('Live entities: '+ this.totalEntities, 5, this.h - 5)
+	this.ctx.fillText('Live entities: '+ EntitySystem.totalEntities, 5, this.h - 5)
 
 	// Call base method to track entity amount
 	return EntitySystem.prototype.process.call(this, dt);

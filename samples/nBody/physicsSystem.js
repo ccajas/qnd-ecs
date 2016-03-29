@@ -71,6 +71,9 @@ PhysicsSystem.prototype.init = function(total, components)
 			(Math.random() * kick) - halfKick,
 			mass
 		);
+
+		self.positions[i].live = true;
+		self.velocities[i].live = true;
 	});
 }
 
@@ -86,16 +89,24 @@ PhysicsSystem.prototype.process = function(dt)
 	// Apply movement relations
 	this.forEachEntity(function(i, self)
 	{
+		// First check if it's out of bounds
+		if (self.positions[i].x > this.w || self.positions[i].x < 0 ||
+			self.positions[i].y > this.h || self.positions[i].y < 0)
+		{
+			self.positions[i].live  = false;
+			self.velocities[i].live = false;
+		}
+
 		// Loop through other entities that haven't been calculated
 		// Start from this entity length
-		for (var j = self.totalEntities - 1; j >= i; j--) 
+		for (var j = EntitySystem.totalEntities - 1; j >= i; j--) 
 		{
 			var dx = self.positions[j].x - self.positions[i].x;
 			var dy = self.positions[j].y - self.positions[i].y;
 			var dist2 = (dx * dx) + (dy * dy);
 
 			// Attract other entities
-			if (!(dist2 <= 100 || dist2 > 100000)) 
+			if (!(dist2 <= 100 || dist2 > 100000))
 			{
 				var v1 = self.velocities[i];
 				var v2 = self.velocities[j];

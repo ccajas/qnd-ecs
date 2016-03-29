@@ -64,5 +64,3 @@ MovementSystem.prototype.process = function(dt)
 	// Call base method to track entity amount
 	return EntitySystem.prototype.process.call(this, dt);
 }
-
-
