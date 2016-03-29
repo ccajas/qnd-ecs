@@ -8,23 +8,31 @@ App = (function()
 	'use strict';
 
 	/**
-	 * TestApp construtor
+	 * TestApp constructor
 	 *
 	 * @memberOf App
+     * @param {Array.<Object>} systemGroup array of all EntitySystems
+     * @param {Object} componentGroups object containing arrays of Components
+     * @param {RenderingContext} [ctx] Canvas rendering context
 	 */
 
-	function App()
+	function App(systemGroup, componentGroups, ctx)
 	{
 		this.systems = [];
-		this.componentGroups = {};
-		this.totalEntities = 0;
+		this.componentGroups = componentGroups;
+
+		// Count total entities
+		this.totalEntities = 
+			(componentGroups && componentGroups.position) ?
+			componentGroups.position.length : 0;
+
+		// Canvas context
+		this.ctx = ctx;
 
 		// Set up EntitySystems. 
 		// They will be process in the order that they are added to the array
 		this.systems.push.apply(
-			this.systems, [
-				new TestSystem('Test')
-			]
+			this.systems, systemGroup
 		);
 	}
 
@@ -40,8 +48,7 @@ App = (function()
 		/**
 		 * Initialize App Components and Systems
 		 *
-		 * @memberOf SystemMgr
-		 * @param {Array.<Object>} componentLists object containing all lists of Components by type
+		 * @memberOf App
 		 */
 
 		init: function()
