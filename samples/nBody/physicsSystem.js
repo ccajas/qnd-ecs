@@ -94,13 +94,14 @@ PhysicsSystem.prototype.process = function(dt)
 		{
 			var dx = self.positions[j].x - self.positions[i].x;
 			var dy = self.positions[j].y - self.positions[i].y;
-			var dist = Math.sqrt((dx * dx) + (dy*dy));
+			var dist2 = (dx * dx) + (dy * dy);
 
 			// Attract other entities
-			if (dist > 1) 
+			if (!(dist2 <= 1 || dist2 > 100000)) 
 			{
 				var v1 = self.velocities[i];
 				var v2 = self.velocities[j];
+				var dist = Math.sqrt(dist2);
 
 				mag = (self.gravity * v1.m * v1.m) / (dist * dist * dist);
 
