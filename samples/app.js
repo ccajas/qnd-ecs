@@ -90,7 +90,7 @@ App = (function()
 			// Process systems and return updated entity count
 			this.systems.forEach(function(system)
 			{
-				self.totalEntities = system.process(dt, self.totalEntities);
+				self.totalEntities = system.process(dt);
 			});
 
 			// Call update on next frame

@@ -19,9 +19,16 @@
 
 function Component(type, id)
 {
-	this._typeID   = type;
+	Object.defineProperty(
+		this, '_typeID', 
+		{
+  			configurable: false,
+  			writable: false,
+  			value: 1 << type
+		}
+	);
 	this._entityID = id || -1;
-	this.live = true;
+	this.live = false;
 }
 
 /**
@@ -53,8 +60,16 @@ Component.prototype.clone = function()
 function EntitySystem(handle)
 {
 	this.handle = handle;
-	this.totalEntities = 0;
+	this.validEntity = 0;
 }
+
+/**
+ * Static variable holding total no. of live entities
+ *
+ * @memberOf EntitySystem
+ */
+
+EntitySystem.totalEntities = 0;
 
 /**
  * Base System initialization
@@ -67,7 +82,7 @@ function EntitySystem(handle)
 EntitySystem.prototype.init = function(total, components)
 {
 	// init stuff
-	this.totalEntities = total;
+	EntitySystem.totalEntities = total;
 }
 
 /**
@@ -79,7 +94,7 @@ EntitySystem.prototype.init = function(total, components)
 
 EntitySystem.prototype.forEachEntity = function(func)
 {
-	for (var i = 0; i < this.totalEntities; i++) func(i, this);
+	for (var i = 0; i < EntitySystem.totalEntities; i++) func(i, this);
 }
 
 /**
@@ -90,4 +105,7 @@ EntitySystem.prototype.forEachEntity = function(func)
  * @param {Number} dt elapsed time, in seconds
  */
 
-EntitySystem.prototype.process = function(dt) { }
+EntitySystem.prototype.process = function(dt) 
+{ 
+	return EntitySystem.totalEntities;
+}
