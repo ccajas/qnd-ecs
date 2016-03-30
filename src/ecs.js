@@ -79,10 +79,9 @@ EntitySystem.totalEntities = 0;
  * @param {Object} components object containing arrays of Components
  */
 
-EntitySystem.prototype.init = function(total, components)
+EntitySystem.prototype.init = function(total)
 {
 	// init stuff
-	EntitySystem.totalEntities = total;
 }
 
 /**

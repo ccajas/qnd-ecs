@@ -22,9 +22,7 @@ App = (function()
 		this.componentGroups = componentGroups;
 
 		// Count total entities
-		this.totalEntities = 
-			(componentGroups && componentGroups.position) ?
-			componentGroups.position.length : 0;
+		this.totalEntities = 0;
 
 		// Canvas context
 		this.ctx = ctx;
@@ -59,10 +57,7 @@ App = (function()
 
 			this.systems.forEach(function(system)
 			{
-				system.init(
-					self.totalEntities, 
-					self.componentGroups
-				);
+				system.init(self.componentGroups);
 			});
 
 			// Debug output of Systems
