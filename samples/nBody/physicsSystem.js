@@ -64,14 +64,6 @@ PhysicsSystem.prototype.process = function(dt)
 	// Apply movement relations
 	this.forEachEntity(function(i, self)
 	{
-		// First check if it's out of bounds
-		if (self.positions[i].x > this.w || self.positions[i].x < 0 ||
-			self.positions[i].y > this.h || self.positions[i].y < 0)
-		{
-			self.positions[i].live  = false;
-			self.velocities[i].live = false;
-		}
-
 		// Loop through other entities that haven't been calculated
 		// Start from this entity length
 		for (var j = EntitySystem.totalEntities - 1; j >= i; j--) 

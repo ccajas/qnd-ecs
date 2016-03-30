@@ -91,6 +91,14 @@ ParticleSystem.prototype.process = function(dt)
 {
 	this.forEachEntity(function(i, self)
 	{
+		// First check if it's out of bounds. If it is, de-spawn it
+		if (self.positions[i].x > self.w || self.positions[i].x < 0 ||
+			self.positions[i].y > self.h || self.positions[i].y < 0)
+		{
+			self.positions[i].live  = false;
+			self.velocities[i].live = false;
+		}
+
 		// If a valid Input Component exists, listen for mouse inputs
 		// to create particles
 		if (self.inputs && self.inputs[i].live)
