@@ -36,16 +36,16 @@ InputHandlerSystem.prototype = new EntitySystem();
  * @param {Object} components object containing arrays of Components
  */
 
-InputHandlerSystem.prototype.init = function(total, components)
+InputHandlerSystem.prototype.init = function(components)
 {
 	// Count total entities
-	EntitySystem.prototype.init.call(this, total, components);
+	EntitySystem.prototype.init.call(this, components);
 
 	// Get important components
 	this.positions  = components.position;
 	this.velocities = components.velocity;
 
-	// Keyboard event listeners	
+	// Keyb3oard event listeners	
 	//document.addEventListener('keydown', this.hKeys.bind(this), false);
 	//document.addEventListener('keyup',   this.hKeys.bind(this), false);
 
@@ -92,7 +92,7 @@ InputHandlerSystem.prototype.hMouse = function(e)
  * @param {Number} dt elapsed time, in seconds
  */
 
-InputHandlerSystem.prototype.process = function(total, components)
+InputHandlerSystem.prototype.process = function(dt)
 {
 	// Get InputHandler component and map events
 	/*this.forEachEntity(function(i, self)
@@ -100,7 +100,7 @@ InputHandlerSystem.prototype.process = function(total, components)
 
 	});*/
 
-	console.log(this.mouseState);
+	//console.log(this.mouseState);
 
 	// Call base method to track entity amount
 	return EntitySystem.prototype.process.call(this, dt);

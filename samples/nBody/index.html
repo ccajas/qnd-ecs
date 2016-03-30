@@ -9,6 +9,7 @@
 	<script src="../app.js"></script>
 
 	<script src="components.js"></script>
+	<script src="particleSystem.js"></script>
 	<script src="physicsSystem.js"></script>
 	<script src="movementSystem.js"></script>
 	<script src="renderSystem.js"></script>
@@ -23,7 +24,7 @@
 		ctx.canvas.height = 500;
 
 		// Max default entities (this can be increased)
-		var len = 1500;
+		var len = 4000;
 
 		// Set up Components
 		var componentGroups = {
@@ -31,9 +32,12 @@
 			velocity: new Array(len).fill(new Velocity(1)),
 		}
 
+		console.log(this);
+
 		// Set up EntitySystems
 		var systems = 
 		[
+			new ParticleSystem ('Particles', ctx),
 			new PhysicsSystem  ('Physics', ctx),
 			new MovementSystem ('Movement'),
 			new RenderSystem   ('Render', ctx)

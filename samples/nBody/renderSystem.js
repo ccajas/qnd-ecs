@@ -51,10 +51,10 @@ RenderSystem.prototype = new EntitySystem();
  * @param {Object} components object containing arrays of Components
  */
 
-RenderSystem.prototype.init = function(total, components)
+RenderSystem.prototype.init = function(components)
 {
 	// Count total entities
-	EntitySystem.prototype.init.call(this, total, components);
+	EntitySystem.prototype.init.call(this, components);
 
 	// Get positions
 	this.positions = components.position;
@@ -75,6 +75,8 @@ RenderSystem.prototype.process = function(dt)
 	for (var d = 0; d < this.data.length; )
 	    this.data[d++] = this.bg;
 
+	var drawn = 0;
+
 	// Draw the dots
 	this.forEachEntity(function(i, self) 
 	{
@@ -85,7 +87,9 @@ RenderSystem.prototype.process = function(dt)
 		var vx = self.velocities[i].x * 5;
 		var vy = self.velocities[i].y * 5;
 
-		var value = ((vx * vx + vy * vy)|0) & 0xff;
+		var speed = (vx * vx + vy * vy);
+		var value = (speed|0) & 0xff;
+		drawn++;
 
 		self.data[y * self.w + x] |= 
             (value << 16) | (value <<  8) | value;

@@ -35,10 +35,10 @@ EntityKeeperSystem.prototype = new EntitySystem();
  * @param {Object} components object containing arrays of Components
  */
 
-EntityKeeperSystem.prototype.init = function(total, components)
+EntityKeeperSystem.prototype.init = function(components)
 {
 	// Count total entities
-	EntitySystem.prototype.init.call(this, total, components);
+	EntitySystem.prototype.init.call(this, components);
 
 	// Reference to Component groups
 	this.components = components;
@@ -54,6 +54,7 @@ EntityKeeperSystem.prototype.init = function(total, components)
 EntityKeeperSystem.prototype.process = function(dt)
 {
 	var total = EntitySystem.totalEntities;
+	var toRemove = 0;
 
 	// Track live entities and mark dead ones
 	this.forEachEntity(function(i, self)
@@ -63,11 +64,15 @@ EntityKeeperSystem.prototype.process = function(dt)
 		{
 			if (self.components[key][i] != null &&
 				self.components[key][i].live)
+			{
 				remove = false;
+			}
 		});
+
 		// If no longer live, swap object with last live component
 		if (remove)
 		{
+			toRemove++;
 			var lastEntity = total - 1;
 
 			// Swap last entity's Components with the one to be removed
@@ -82,8 +87,9 @@ EntityKeeperSystem.prototype.process = function(dt)
 		}
 	});
 
-	if (EntitySystem.totalEntities != total)
-		EntitySystem.totalEntities = total;
+	//console.log(toRemove);
+
+	EntitySystem.totalEntities = total;
 
 	// Call base method to track entity amount
 	return EntitySystem.prototype.process.call(this, dt);

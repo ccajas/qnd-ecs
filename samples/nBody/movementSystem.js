@@ -34,10 +34,10 @@ MovementSystem.prototype = new EntitySystem();
  * @param {Object} components object containing arrays of Components
  */
 
-MovementSystem.prototype.init = function(total, components)
+MovementSystem.prototype.init = function(components)
 {
 	// Count total entities
-	EntitySystem.prototype.init.call(this, total, components);
+	EntitySystem.prototype.init.call(this, components);
 
 	// Get important components
 	this.positions = components.position;

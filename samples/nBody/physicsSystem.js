@@ -13,7 +13,7 @@
  * @param {RenderingContext} ctx reference to the Canvas rendering context
  */
 
-function PhysicsSystem(handle) 
+function PhysicsSystem(handle, ctx) 
 {
 	// Call constructor
 	EntitySystem.call(this, handle);
@@ -21,6 +21,9 @@ function PhysicsSystem(handle)
 	// X and Y bounds, for positioning
 	this.w = ctx.canvas.width;
 	this.h = ctx.canvas.height;
+
+	// World properties
+	this.gravity = 1;
 }
 
 /**
@@ -39,42 +42,14 @@ PhysicsSystem.prototype = new EntitySystem();
  * @param {Object} components object containing arrays of Components
  */
 
-PhysicsSystem.prototype.init = function(total, components)
+PhysicsSystem.prototype.init = function(components)
 {
 	// Count total entities
-	EntitySystem.prototype.init.call(this, total, components);
+	EntitySystem.prototype.init.call(this, components);
 
 	// Get important components
 	this.positions  = components.position;
 	this.velocities = components.velocity;
-
-	// Constant values
-	var kick = 0;
-	var halfKick = kick / 2;
-	var mass = 1;
-	this.gravity = 1;
-
-	// Randomize starting positions and velocities
-	this.forEachEntity(function(i, self) 
-	{
-		self.positions[i] = new Position
-		(
-			0, i,
-			Math.random() * self.w,
-			Math.random() * self.h
-		);
-
-		self.velocities[i] = new Velocity
-		(
-			1, i,
-			(Math.random() * kick) - halfKick,
-			(Math.random() * kick) - halfKick,
-			mass
-		);
-
-		self.positions[i].live = true;
-		self.velocities[i].live = true;
-	});
 }
 
 /**
