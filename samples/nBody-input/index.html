@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>N-body Simulation with Input</title>
+	<meta charset="utf-8"/>
+</head>
+</body>
+	<script src="../../src/ecs.js"></script>
+	<script src="../app.js"></script>
+
+	<script src="../nBody/components.js"></script>
+	<script src="../nBody/physicsSystem.js"></script>
+	<script src="../nBody/movementSystem.js"></script>
+	<script src="../nBody/renderSystem.js"></script>
+	<script src="inputHandlerSystem.js"></script>
+	<script src="entityKeeperSystem.js"></script>
+
+	<canvas id="draw" width="500" height="500"></canvas>
+	<br/>
+
+	<script type="text/javascript">
+
+		var ctx = document.getElementById('draw').getContext('2d');
+		ctx.canvas.width = 500;
+		ctx.canvas.height = 500;
+
+		// Max default entities (this can be increased)
+		var len = 1000;
+
+		// Set up Components
+		var componentGroups = {
+			position: new Array(len).fill(new Position(0)),
+			velocity: new Array(len).fill(new Velocity(1)),
+		}
+
+		// Set up EntitySystems
+		var systems = 
+		[
+			new InputHandlerSystem ('Input'),
+			new PhysicsSystem      ('Physics', ctx),
+			new MovementSystem     ('Movement'),
+			new RenderSystem       ('Render', ctx),
+			new EntityKeeperSystem ('Keeper')
+		];
+
+		// Initialize the app with ECS
+		var testApp = new App(systems, componentGroups, ctx);
+		testApp.init();
+
+	</script>
+</body>
+</html>
