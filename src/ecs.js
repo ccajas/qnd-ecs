@@ -19,14 +19,6 @@
 
 function Component(type, id)
 {
-	Object.defineProperty(
-		this, '_typeID', 
-		{
-  			configurable: false,
-  			writable: false,
-  			value: 1 << type
-		}
-	);
 	this._entityID = id || -1;
 	this.live = false;
 }
@@ -43,6 +35,14 @@ Component.prototype.clone = function()
 	// JSON trick to quickly clone
 	return (JSON.parse(JSON.stringify(this)));
 }
+
+/**
+ * Static variable to define the Component type
+ *
+ * @memberOf Component
+ */
+
+Component._typeID = 0;
 
 //// EntitySystem ////
 

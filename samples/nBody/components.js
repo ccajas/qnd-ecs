@@ -1,6 +1,13 @@
 
 'use strict'
 
+/**
+ * Component type definitions
+ */
+
+Position._typeID = 0;
+Velocity._typeID = 1;
+
 //// Position ////
 
 /**
@@ -13,13 +20,13 @@
  * Position constructor
  *
  * @memberOf Position
- * @param {number} type Component type ID
- * @param {number} [id] ID of the entity this belongs to
+ * @param {number}  [id] ID of the entity this belongs to
+ * @param {boolean} [live] default live state
  */
 
-function Position(type, id)
+function Position(id, live)
 {
-	Component.call(this, type, id);
+	Component.call(this, id, live);
 
 	this.x = 0;
 	this.y = 0;
@@ -29,15 +36,15 @@ function Position(type, id)
  * Position constructor with defined values
  *
  * @memberOf Position
- * @param {number} type Component type ID
- * @param {number} [id] ID of the entity this belongs to
  * @param {number} x x coordinate
  * @param {number} y y coordinate
+ * @param {number}  [id] ID of the entity this belongs to
+ * @param {boolean} [live] default live state
  */
 
-function Position(type, id, x, y)
+function Position(x, y, id, live)
 {
-	Component.call(this, type, id);
+	Component.call(this, id, live);
 
 	this.x = x;
 	this.y = y;
@@ -63,16 +70,16 @@ Position.prototype = new Component();
  * Velocity constructor with defined values
  *
  * @memberOf Velocity
- * @param {number} type Component type ID
- * @param {number} [id] ID of the entity this belongs to
  * @param {number} x horizontal velocity
  * @param {number} y vertical velocity
  * @param {number} m mass or momentum
+ * @param {number}  [id] ID of the entity this belongs to
+ * @param {boolean} [live] default live state
  */
 
-function Velocity(type, id, x, y, m)
+function Velocity(x, y, m, id, live)
 {
-	Component.call(this, type, id);
+	Component.call(this, id, live);
 
 	this.x = x || 0;
 	this.y = y || 0;
