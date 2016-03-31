@@ -53,8 +53,8 @@ EntityKeeperSystem.prototype.init = function(components)
 
 EntityKeeperSystem.prototype.process = function(dt)
 {
-	var total = EntitySystem.totalEntities;
-	var toRemove = 0;
+	// Check entity count
+	var total = 0;
 
 	// Track live entities and mark dead ones
 	this.forEachEntity(function(i, self)
@@ -66,13 +66,13 @@ EntityKeeperSystem.prototype.process = function(dt)
 				self.components[key][i].live)
 			{
 				remove = false;
+				total++;
 			}
 		});
 
 		// If no longer live, swap object with last live component
 		if (remove)
 		{
-			toRemove++;
 			var lastEntity = total - 1;
 
 			// Swap last entity's Components with the one to be removed
@@ -87,8 +87,7 @@ EntityKeeperSystem.prototype.process = function(dt)
 		}
 	});
 
-	//console.log(toRemove);
-
+	// Update entity count
 	EntitySystem.totalEntities = total;
 
 	// Call base method to track entity amount

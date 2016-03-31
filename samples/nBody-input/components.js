@@ -1,6 +1,12 @@
 
 'use strict'
 
+/**
+ * Component type definitions
+ */
+
+InputState._typeID = 2;
+
 //// InputState ////
 
 /**
@@ -13,13 +19,13 @@
  * InputState constructor
  *
  * @memberOf InputState
- * @param {number} type Component type ID
- * @param {number} [id] ID of the entity this belongs to
+ * @param {number}  [id] ID of the entity this belongs to
+ * @param {boolean} [live] default live state
  */
 
-function InputState(type, id)
+function InputState(id, live)
 {
-	Component.call(this, type, id);
+	Component.call(this, id, live);
 
 	// Current and last input states
 	this.keyState = {};

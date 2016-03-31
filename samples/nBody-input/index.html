@@ -33,9 +33,9 @@
 
 		// Set up Components
 		var componentGroups = {
-			input:    new Array(len).fill(new InputState(0)),
-			position: new Array(len).fill(new Position(1)),
-			velocity: new Array(len).fill(new Velocity(2))
+			input:    new Array(len).fill(new InputState()),
+			position: new Array(len).fill(new Position()),
+			velocity: new Array(len).fill(new Velocity())
 		}
 
 		// Set up EntitySystems

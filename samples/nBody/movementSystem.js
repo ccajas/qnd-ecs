@@ -40,7 +40,7 @@ MovementSystem.prototype.init = function(components)
 	EntitySystem.prototype.init.call(this, components);
 
 	// Get important components
-	this.positions = components.position;
+	this.positions  = components.position;
 	this.velocities = components.velocity;
 }
 

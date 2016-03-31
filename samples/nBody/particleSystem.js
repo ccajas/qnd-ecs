@@ -62,21 +62,17 @@ ParticleSystem.prototype.init = function(components)
 	{
 		self.positions[i] = new Position
 		(
-			0, i,
 			Math.random() * self.w,
-			Math.random() * self.h
+			Math.random() * self.h,
+			i, true
 		);
 
 		self.velocities[i] = new Velocity
 		(
-			1, i,
 			(Math.random() * kick) - halfKick,
 			(Math.random() * kick) - halfKick,
-			mass
+			mass, i, true
 		);
-
-		self.positions[i].live = true;
-		self.velocities[i].live = true;	
 	});
 }
 
