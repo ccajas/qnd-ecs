@@ -8,7 +8,10 @@
 	<script src="../../src/ecs.js"></script>
 	<script src="../app.js"></script>
 
+	<!-- components also used from nBody sample -->
 	<script src="../nBody/components.js"></script>
+	<script src="components.js"></script>
+
 	<script src="../nBody/particleSystem.js"></script>
 	<script src="../nBody/physicsSystem.js"></script>
 	<script src="../nBody/movementSystem.js"></script>
@@ -30,8 +33,9 @@
 
 		// Set up Components
 		var componentGroups = {
-			position: new Array(len).fill(new Position(0)),
-			velocity: new Array(len).fill(new Velocity(1)),
+			input:    new Array(len).fill(new InputState(0)),
+			position: new Array(len).fill(new Position(1)),
+			velocity: new Array(len).fill(new Velocity(2))
 		}
 
 		// Set up EntitySystems

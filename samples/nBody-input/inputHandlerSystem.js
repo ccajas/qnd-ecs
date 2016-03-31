@@ -15,9 +15,6 @@
 function InputHandlerSystem(handle) 
 {
 	EntitySystem.call(this, handle);
-
-	// Initial input states
-	this.mouseState = {}
 }
 
 /**
@@ -38,21 +35,39 @@ InputHandlerSystem.prototype = new EntitySystem();
 
 InputHandlerSystem.prototype.init = function(components)
 {
-	// Count total entities
 	EntitySystem.prototype.init.call(this, components);
 
-	// Get important components
-	this.positions  = components.position;
-	this.velocities = components.velocity;
+	// Get Input Components
+	this.inputs = components.input;
 
-	// Keyb3oard event listeners	
-	//document.addEventListener('keydown', this.hKeys.bind(this), false);
-	//document.addEventListener('keyup',   this.hKeys.bind(this), false);
+	console.log('start', components);
 
-	// Mouse event listeners
-	window.addEventListener('mousedown', this.hMouse.bind(this), false);
-	window.addEventListener('mouseup',   this.hMouse.bind(this), false);
-	window.addEventListener('mousemove', this.hMouse.bind(this), false);
+	// Add an Input Component
+	var total = EntitySystem.totalEntities;
+	this.inputs[total].live = true;
+	EntitySystem.totalEntities++;
+
+	// Get InputHandler component and map events
+	this.forEachEntity(function(i, self)
+	{
+		if (self.inputs[i].live == true)
+		{
+			// Keyboard event listeners	
+			//document.addEventListener('keydown', this.hKeys.bind(this), false);
+			//document.addEventListener('keyup',   this.hKeys.bind(this), false);
+
+			var input = self.inputs[i];
+			console.log('binding mouse inputs!', i);
+
+			// Mouse event listeners
+			window.addEventListener('mousedown', self.hMouse.bind(input), false);
+			window.addEventListener('mouseup',   self.hMouse.bind(input), false);
+			window.addEventListener('mousemove', self.hMouse.bind(input), false);
+		}
+	});
+
+
+	console.log('end', components);
 }
 
 /**
@@ -100,7 +115,7 @@ InputHandlerSystem.prototype.process = function(dt)
 
 	});*/
 
-	//console.log(this.mouseState);
+	//console.log(EntitySystem.totalEntities);
 
 	// Call base method to track entity amount
 	return EntitySystem.prototype.process.call(this, dt);
