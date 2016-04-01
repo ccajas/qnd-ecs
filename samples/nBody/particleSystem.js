@@ -47,6 +47,7 @@ ParticleSystem.prototype.init = function(components)
 	// Get important components
 	this.positions  = components.position;
 	this.velocities = components.velocity;
+	this.inputs		= components.input;
 
 	// Constant values
 	var kick = 0;
@@ -101,10 +102,33 @@ ParticleSystem.prototype.process = function(dt)
 
 		// If a valid Input Component exists, listen for mouse inputs
 		// to create particles
-		if (self.inputs && self.inputs[i].live)
-		{
+		if (self.inputs)
+			if (self.inputs[i] && self.inputs[i].live)
+			{
+				var mouseState = self.inputs[i].mouseState;
+				
+				// Spawn a new particle when button is pressed
+				if (mouseState.buttons == 1)
+				{
+					var mass = 1;
+					var next = EntitySystem.totalEntities;
 
-		}
+					self.positions[next] = new Position
+					(
+						mouseState.x,
+						mouseState.y,
+						next, true
+					);
+
+					self.velocities[next] = new Velocity
+					(
+						0, 0, mass, next, true
+					);
+
+					// Add entity count
+					EntitySystem.totalEntities++;
+				}
+			}
 	});
 
 	// Call base method to track entity amount
