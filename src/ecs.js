@@ -13,14 +13,14 @@
  * Component constructor
  *
  * @memberOf Component
- * @param {number} type Component type ID
- * @param {number} [id] ID of the entity this belongs to
+ * @param {number}  [id] ID of the entity this belongs to
+ * @param {boolean} [live] default live state
  */
 
-function Component(type, id)
+function Component(id, live)
 {
-	this._entityID = id || -1;
-	this.live = false;
+	this._entityID = (id >= 0) ? id : -1;
+	this.live 	   = live || false;
 }
 
 /**

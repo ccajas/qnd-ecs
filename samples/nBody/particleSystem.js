@@ -55,25 +55,29 @@ ParticleSystem.prototype.init = function(components)
 
 	// Starting no. of particles
 	var particles = 1000;
-	EntitySystem.totalEntities = particles;
+	var start = EntitySystem.totalEntities;
+
+	console.log('particle start: '+ start);
 
 	// Randomize starting positions and velocities
-	this.forEachEntity(function(i, self) 
+	for (var i = start; i < start + particles; i++)
 	{
-		self.positions[i] = new Position
+		this.positions[i] = new Position
 		(
-			Math.random() * self.w,
-			Math.random() * self.h,
+			Math.random() * this.w,
+			Math.random() * this.h,
 			i, true
 		);
 
-		self.velocities[i] = new Velocity
+		this.velocities[i] = new Velocity
 		(
 			(Math.random() * kick) - halfKick,
 			(Math.random() * kick) - halfKick,
 			mass, i, true
 		);
-	});
+	}
+
+	EntitySystem.totalEntities += particles;
 }
 
 /**

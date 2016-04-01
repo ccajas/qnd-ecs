@@ -54,7 +54,7 @@ EntityKeeperSystem.prototype.init = function(components)
 EntityKeeperSystem.prototype.process = function(dt)
 {
 	// Check entity count
-	var total = 0;
+	var total = EntitySystem.totalEntities;
 
 	// Track live entities and mark dead ones
 	this.forEachEntity(function(i, self)
@@ -66,7 +66,6 @@ EntityKeeperSystem.prototype.process = function(dt)
 				self.components[key][i].live)
 			{
 				remove = false;
-				total++;
 			}
 		});
 

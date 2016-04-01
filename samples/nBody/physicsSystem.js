@@ -68,6 +68,9 @@ PhysicsSystem.prototype.process = function(dt)
 		// Start from this entity length
 		for (var j = EntitySystem.totalEntities - 1; j >= i; j--) 
 		{
+			if (!self.positions[i].live && !self.velocities[i].live) continue;
+			if (!self.positions[j].live && !self.velocities[j].live) continue;
+
 			var dx = self.positions[j].x - self.positions[i].x;
 			var dy = self.positions[j].y - self.positions[i].y;
 			var dist2 = (dx * dx) + (dy * dy);
@@ -90,7 +93,7 @@ PhysicsSystem.prototype.process = function(dt)
 		}
 		// Finish calculating for this entity
 	});
-
+	
 	// Call base method to track entity amount
 	return EntitySystem.prototype.process.call(this, dt);
 }

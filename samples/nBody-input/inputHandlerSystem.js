@@ -43,31 +43,30 @@ InputHandlerSystem.prototype.init = function(components)
 	console.log('start', components);
 
 	// Add an Input Component
-	var total = EntitySystem.totalEntities;
-	this.inputs[total].live = true;
-	EntitySystem.totalEntities++;
+	var inputs = 1;
+	var start  = EntitySystem.totalEntities;
+
+	console.log('inputHandler start: '+ start);
 
 	// Get InputHandler component and map events
-	this.forEachEntity(function(i, self)
+	for (var i = start; i < start + inputs; i++)
 	{
-		if (self.inputs[i].live == true)
-		{
-			// Keyboard event listeners	
-			//document.addEventListener('keydown', this.hKeys.bind(this), false);
-			//document.addEventListener('keyup',   this.hKeys.bind(this), false);
+		this.inputs[i] = new InputState(i, true);
 
-			var input = self.inputs[i];
-			console.log('binding mouse inputs!', i);
+		// Keyboard event listeners	
+		//document.addEventListener('keydown', this.hKeys.bind(this), false);
+		//document.addEventListener('keyup',   this.hKeys.bind(this), false);
 
-			// Mouse event listeners
-			window.addEventListener('mousedown', self.hMouse.bind(input), false);
-			window.addEventListener('mouseup',   self.hMouse.bind(input), false);
-			window.addEventListener('mousemove', self.hMouse.bind(input), false);
-		}
-	});
+		var input = this.inputs[i];
+		console.log('binding mouse inputs!', this.inputs[i]);
 
+		// Mouse event listeners
+		window.addEventListener('mousedown', this.hMouse.bind(input), false);
+		window.addEventListener('mouseup',   this.hMouse.bind(input), false);
+		window.addEventListener('mousemove', this.hMouse.bind(input), false);
+	}
 
-	console.log('end', components);
+	EntitySystem.totalEntities += inputs;
 }
 
 /**
