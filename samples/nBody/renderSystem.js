@@ -75,8 +75,6 @@ RenderSystem.prototype.process = function(dt)
 	for (var d = 0; d < this.data.length; )
 	    this.data[d++] = this.bg;
 
-	var drawn = 0;
-
 	// Draw the dots
 	this.forEachEntity(function(i, self) 
 	{
@@ -88,8 +86,7 @@ RenderSystem.prototype.process = function(dt)
 		var vy = self.velocities[i].y * 5;
 
 		var speed = (vx * vx + vy * vy);
-		var value = (speed|0) & 0xff;
-		drawn++;
+		var value = (speed|0 < 0xff) ? speed|0 : 0xff;
 
 		self.data[y * self.w + x] |= 
             (value << 16) | (value <<  8) | value;
@@ -101,7 +98,8 @@ RenderSystem.prototype.process = function(dt)
 	// Display no. of live entities
 	this.ctx.fillStyle = '#ccc';
 	this.ctx.font = "12px Helvetica, Arial";
-	this.ctx.fillText('Live entities: '+ EntitySystem.totalEntities, 5, this.h - 5)
+	this.ctx.fillText('Live entities: '+ EntitySystem.totalEntities, 5, this.h - 5);
+	this.ctx.fillText('N-body Simulation '+ dt * 1000 +'ms', 5, 15);
 
 	// Call base method to track entity amount
 	return EntitySystem.prototype.process.call(this, dt);

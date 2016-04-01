@@ -21,6 +21,7 @@ function PhysicsSystem(handle, ctx)
 	// X and Y bounds, for positioning
 	this.w = ctx.canvas.width;
 	this.h = ctx.canvas.height;
+	this.stepTime = 60;
 
 	// World properties
 	this.gravity = 1;
@@ -76,14 +77,16 @@ PhysicsSystem.prototype.process = function(dt)
 			var dist2 = (dx * dx) + (dy * dy);
 
 			// Attract other entities
-			if (!(dist2 <= 100 || dist2 > 100000))
+			if (!(dist2 <= 10000 || dist2 > 100000))
 			{
 				var v1 = self.velocities[i];
 				var v2 = self.velocities[j];
 				var dist = Math.sqrt(dist2);
 
 				// magnitude
+				var t = dt * self.stepTime;
 				var mag = (self.gravity * v1.m * v1.m) / (dist * dist * dist);
+				mag *= t;
 
 				v1.x += dx * mag * v1.m;
 				v1.y += dy * mag * v1.m;

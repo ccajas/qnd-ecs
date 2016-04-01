@@ -53,7 +53,8 @@ App = (function()
 		init: function()
 		{
 			var self = this;
-			dt, lastFrame = 0;
+			dt = 0;
+			lastFrame = Date.now();
 
 			this.systems.forEach(function(system)
 			{
