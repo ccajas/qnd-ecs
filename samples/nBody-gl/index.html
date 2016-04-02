@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>N-body Simulation with Input</title>
+	<meta charset="utf-8"/>
+	<style>
+		html, body {
+			margin: 0px;
+			padding: 0px;
+			overflow: hidden;
+			width: 100%;
+			height: 100%;
+		}
+		canvas {
+       		width: 100%;
+        	height: 100%;
+			margin: 0px auto;
+			border: 0px;
+		}
+	</style>
+</head>
+</body>
+	<!-- framework files -->
+	<script src="../../src/ecs.js"></script>
+	<script src="gl.js"></script>
+	<script src="../app.js"></script>
+
+	<!-- required components -->
+	<script src="../nBody/components.js"></script>
+	<script src="components.js"></script>
+
+	<script src="../nBody/particleSystem.js"></script>
+	<script src="../nBody/physicsSystem.js"></script>
+	<script src="../nBody/movementSystem.js"></script>
+	<script src="systems/inputHandlerSystem.js"></script>
+	<script src="systems/entityKeeperSystem.js"></script>
+	<script src="systems/renderSystem.js"></script>
+
+	<canvas id="draw" width="500" height="500"></canvas>
+	<br/>
+
+	<script type="text/javascript">
+
+		// Default no. of entities (this can be increased)
+		var len = 1;
+		var e_noGL = "Unable to initalize GL context!";
+
+		var canvas = document.getElementById("draw");
+		var gl = initGL(canvas, e_noGL);
+
+		// Setup GL context			
+		if (gl)
+		{
+			// Set up Components
+			var componentGroups = {
+				input:    new Array(len).fill(new InputState()),
+				position: new Array(len).fill(new Position()),
+				velocity: new Array(len).fill(new Velocity())
+			}
+
+			// Set up EntitySystems
+			var systems = 
+			[
+				new InputHandlerSystem ('Input'),
+				new ParticleSystem     ('Particles', gl),
+				new PhysicsSystem      ('Physics', gl),
+				new MovementSystem     ('Movement'),
+				new RenderSystem       ('Render', gl),
+				new EntityKeeperSystem ('Keeper')
+			];
+
+			console.log('GL is loaded');
+
+			// Initialize the app with ECS
+			var testApp = new App(systems, componentGroups, gl);
+			testApp.init();
+		}
+
+	</script>
+</body>
+</html>

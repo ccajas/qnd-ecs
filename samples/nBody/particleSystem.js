@@ -55,7 +55,7 @@ ParticleSystem.prototype.init = function(components)
 	var mass = 1;
 
 	// Starting no. of particles
-	var particles = 2400;
+	var particles = 1250;
 	var start = EntitySystem.totalEntities;
 
 	console.log('particle start: '+ start);
