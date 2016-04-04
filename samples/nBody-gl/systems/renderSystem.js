@@ -1,6 +1,6 @@
 
 /**
- * A Canvas rendering System that inherits from EntitySystem
+ * A WebGL rendering System that inherits from EntitySystem
  * @class
  * @name RenderSystem
  */
@@ -10,26 +10,16 @@
  *
  * @memberOf RenderSystem
  * @param {String} handle the name for this EntitySystem
- * @param {RenderingContext} ctx reference to the Canvas rendering context
+ * @param {RenderingContext} gl reference to the WebGL rendering context
  */
 
-function RenderSystem(handle, ctx) 
+function RenderSystem(handle, gl) 
 {
 	// Call constructor
 	EntitySystem.call(this, handle);
 
 	// Canvas settings
-	this.ctx = ctx;
-	this.w = ctx.canvas.width;
-	this.h = ctx.canvas.height;
-	this.imgData = ctx.getImageData(0, 0, this.w, this.h);
-
-	// Buffer data for image processing
-	this.buf  = new ArrayBuffer(this.imgData.data.length);
-	this.buf8 = new Uint8ClampedArray(this.buf);
-	this.data = new Uint32Array(this.buf);
-
-	console.log(this.imgData);
+	this.gl = gl;
 
 	// Default background color
 	this.bg = 0xff000000;
@@ -71,36 +61,13 @@ RenderSystem.prototype.init = function(components)
 
 RenderSystem.prototype.process = function(dt)
 {
+	var gl = this.gl;
+
 	// Clear the canvas
-	for (var d = 0; d < this.data.length; )
-	    this.data[d++] = this.bg;
-
-	// Draw the dots
-	this.forEachEntity(function(i, self) 
-	{
-		var x = self.positions[i].x|0;
-		var y = self.positions[i].y|0;
-
-		// Add color based on velocity
-		var vx = self.velocities[i].x * 5;
-		var vy = self.velocities[i].y * 5;
-
-		var speed = (vx * vx + vy * vy);
-		if (speed > 255) speed = 255;
-		var value = speed|0 & 0xff;
-
-		self.data[y * self.w + x] |= 
-            (value << 16) | (value <<  8) | value;
-	});
-
-	this.imgData.data.set(this.buf8);
-	this.ctx.putImageData(this.imgData, 0, 0);
-
-	// Display no. of live entities
-	this.ctx.fillStyle = '#ccc';
-	this.ctx.font = "12px Helvetica, Arial";
-	this.ctx.fillText('Live entities: '+ EntitySystem.totalEntities, 5, this.h - 5);
-	this.ctx.fillText('N-body Simulation '+ dt * 1000 +'ms', 5, 15);
+	gl.clearColor(0.11, 0.16, 0.21, 1.0);
+	gl.enable(gl.DEPTH_TEST);
+	gl.depthFunc(gl.LEQUAL);
+	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
 	// Call base method to track entity amount
 	return EntitySystem.prototype.process.call(this, dt);
