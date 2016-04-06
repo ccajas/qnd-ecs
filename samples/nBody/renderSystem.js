@@ -59,6 +59,10 @@ RenderSystem.prototype.init = function(components)
 	// Get positions
 	this.positions = components.position;
 	this.velocities = components.velocity;
+
+	// Pre-draw canvas background
+	this.ctx.fillStyle = '#000';
+	this.ctx.fillRect(0, 0, this.w, this.h);
 }
 
 
@@ -72,8 +76,12 @@ RenderSystem.prototype.init = function(components)
 RenderSystem.prototype.process = function(dt)
 {
 	// Clear the canvas
-	for (var d = 0; d < this.data.length; )
-	    this.data[d++] = this.bg;
+	//for (var d = 0; d < this.data.length; )
+	//    this.data[d++] = this.bg;
+
+	this.ctx.fillStyle = 'rgba(0, 0, 0, 0.02)';
+	this.ctx.fillRect(0, 0, this.w, this.h);
+	this.ctx.fillStyle = '#fff';
 
 	// Draw the dots
 	this.forEachEntity(function(i, self) 
@@ -89,12 +97,18 @@ RenderSystem.prototype.process = function(dt)
 		if (speed > 255) speed = 255;
 		var value = speed|0 & 0xff;
 
-		self.data[y * self.w + x] |= 
-            (value << 16) | (value <<  8) | value;
+		self.ctx.fillRect(x, y, 1, 1);
+		//self.data[y * self.w + x] |= 
+        //    (value << 16) | (value <<  8) | value;
 	});
 
-	this.imgData.data.set(this.buf8);
-	this.ctx.putImageData(this.imgData, 0, 0);
+	//this.imgData.data.set(this.buf8);
+	//this.ctx.putImageData(this.imgData, 0, 0);
+
+	// Clear some backgrounds
+	this.ctx.fillStyle = '#000';
+	this.ctx.fillRect(0, 0, 150, 20);
+	this.ctx.fillRect(0, this.h - 20, 100, 20);
 
 	// Display no. of live entities
 	this.ctx.fillStyle = '#ccc';
