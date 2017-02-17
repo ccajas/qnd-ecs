@@ -1,10 +1,10 @@
 ## Sample Applications
 
-### Simpletest
+### simpleTest
 
 A basic implementation of QND-ECS using one System.
 
-### Nbody
+### nBody
 
 N-Body simulation with: 
 * **MovementSystem** - update Positions with Velocity component
@@ -12,7 +12,7 @@ N-Body simulation with:
 * **PhysicsSystem** - update Velocities
 * **RenderSystem** - draws points (Canvas) using Positions
 
-### Nbody-input
+### nBody-input
 
 Uses code from *Nbody* plus:
 * **EntityKeeperSystem** - manages lifetime of Entities
