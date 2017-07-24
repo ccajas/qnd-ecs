@@ -1,3 +1,7 @@
+# Quick 'N' Dirty ECS (Entity Component System)
+
+Entities are implicity defined as "nodes" or aggregates of components. There is no "Entity" object.
+
 ## Sample Applications
 
 ### simpleTest
