@@ -105,18 +105,19 @@ ParticleSystem.prototype.process = function(dt)
 		if (self.inputs)
 			if (self.inputs[i] && self.inputs[i].live)
 			{
-				var mouseState = self.inputs[i].mouseState;
+				const mouseState = self.inputs[i].mouseState;
+				const rect = ctx.canvas.getBoundingClientRect();
 				
 				// Spawn a new particle when button is pressed
-				if (mouseState.buttons == 1)
+				if (mouseState.buttons & 1)
 				{
-					var mass = 1;
-					var next = EntitySystem.totalEntities;
+					const mass = 1;
+					const next = EntitySystem.totalEntities;
 
 					self.positions[next] = new Position
 					(
-						mouseState.x,
-						mouseState.y,
+						mouseState.x - rect.x,
+						mouseState.y - rect.y,
 						next, true
 					);
 

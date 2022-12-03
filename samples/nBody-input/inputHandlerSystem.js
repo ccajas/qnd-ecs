@@ -58,7 +58,7 @@ InputHandlerSystem.prototype.init = function(components)
 		//document.addEventListener('keyup',   this.hKeys.bind(this), false);
 
 		var input = this.inputs[i];
-		console.log('binding mouse inputs!', this.inputs[i]);
+		console.log('binding mouse inputs', this.inputs[i]);
 
 		// Mouse event listeners
 		window.addEventListener('mousedown', this.hMouse.bind(input), false);

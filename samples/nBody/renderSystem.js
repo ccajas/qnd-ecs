@@ -32,7 +32,7 @@ function RenderSystem(handle, ctx)
 	console.log(this.imgData);
 
 	// Default background color
-	this.bg = 0xff000000;
+	//this.bg = 0xff000000;
 }
 
 /**
@@ -61,7 +61,7 @@ RenderSystem.prototype.init = function(components)
 	this.velocities = components.velocity;
 
 	// Pre-draw canvas background
-	this.ctx.fillStyle = '#000';
+	this.ctx.fillStyle = '#004';
 	this.ctx.fillRect(0, 0, this.w, this.h);
 }
 
@@ -79,9 +79,11 @@ RenderSystem.prototype.process = function(dt)
 	//for (var d = 0; d < this.data.length; )
 	//    this.data[d++] = this.bg;
 
-	this.ctx.fillStyle = 'rgba(0, 0, 0, 0.02)';
+	this.ctx.fillStyle = 'rgba(17, 51, 85, 0.05)';
 	this.ctx.fillRect(0, 0, this.w, this.h);
 	this.ctx.fillStyle = '#fff';
+
+	let rendered = 0;
 
 	// Draw the dots
 	this.forEachEntity(function(i, self) 
@@ -97,7 +99,7 @@ RenderSystem.prototype.process = function(dt)
 		if (speed > 255) speed = 255;
 		var value = speed|0 & 0xff;
 
-		self.ctx.fillRect(x, y, 1, 1);
+		self.ctx.fillRect(x, y, 2, 2);
 		//self.data[y * self.w + x] |= 
         //    (value << 16) | (value <<  8) | value;
 	});
@@ -106,15 +108,19 @@ RenderSystem.prototype.process = function(dt)
 	//this.ctx.putImageData(this.imgData, 0, 0);
 
 	// Clear some backgrounds
-	this.ctx.fillStyle = '#000';
+	this.ctx.fillStyle = '#004';
 	this.ctx.fillRect(0, 0, 150, 20);
-	this.ctx.fillRect(0, this.h - 20, 100, 20);
+	this.ctx.fillRect(0, this.h - 20, 110, 20);
 
 	// Display no. of live entities
 	this.ctx.fillStyle = '#ccc';
 	this.ctx.font = "12px Helvetica, Arial";
 	this.ctx.fillText('Live entities: '+ EntitySystem.totalEntities, 5, this.h - 5);
 	this.ctx.fillText('N-body Simulation '+ dt * 1000 +'ms', 5, 15);
+
+	// Update text on page
+	if (document.getElementById('entityCount') !== null)
+		document.getElementById('entityCount').innerText = EntitySystem.totalEntities;
 
 	// Call base method to track entity amount
 	return EntitySystem.prototype.process.call(this, dt);

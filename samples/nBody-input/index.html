@@ -4,8 +4,23 @@
 	<title>N-body Simulation with Input</title>
 	<meta charset="utf-8"/>
 	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400&display=swap');
 		html, body {
 			margin: 0px;
+			padding: 0px;
+			font-family: 'Poppins', Arial, sans-serif;
+			font-size: 24px;
+			text-align: center;
+			background-color: #dec;
+			color: #135;
+		}
+		p {
+			margin: 0px auto;
+			width: 50%;
+		}
+		.center {
+			display: block;
+			margin: 0px auto;
 			padding: 0px;
 		}
 	</style>
@@ -25,7 +40,16 @@
 	<script src="inputHandlerSystem.js"></script>
 	<script src="entityKeeperSystem.js"></script>
 
-	<canvas id="draw" width="500" height="500"></canvas>
+	<canvas class="center" id="draw" width="500" height="500"></canvas>
+	<h2>N-Body with Input</h2>
+	<p>
+		This demo includes <strong>N-Body</strong> and adds the <strong>EntityKeeper</strong> and <strong>InputHandler</strong> systems.
+		<strong>EntityKeeper</strong> tracks the lifetimes of components and removes entities as needed, and <strong>InputHandler</strong>
+		detects mouse clicks to add new <strong>Particle</strong> entities.<br/>A separate entity exists for the <strong>InputState</strong> component.
+	</p>
+	<p>
+		<strong><span id="entityCount">0</span></strong> Entities are being updated.
+	</p>
 	<br/>
 
 	<script type="text/javascript">
